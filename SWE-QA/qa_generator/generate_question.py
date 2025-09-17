@@ -16,13 +16,13 @@ def main():
     REPO_NAME = "django" # streamlink, reflex, conan
     parser = argparse.ArgumentParser(description="Extract all code nodes from code repository")
     # parser.add_argument("--repo_path","-r",default="/Users/xinyun/Programs/django/django/core", help="Path to code repository")
-    parser.add_argument("--output-dir", "-o", default="/data3/pwh/codeqa/dataset/generated_questions", help="Output directory")
+    parser.add_argument("--output-dir", "-o", default="./codeqa/dataset/generated_questions", help="Output directory")
     parser.add_argument("--batch-size", "-b", type=int, default=20, help="Number of questions to write per batch")
     
     args = parser.parse_args()
     output_dir = args.output_dir
     batch_size = args.batch_size
-    repo_full_path = f"/data2/raymone/repo_analysis/full_code_for_embedding/{REPO_NAME}/{REPO_NAME}_repo_full.json"
+    repo_full_path = f"./repo_analysis/full_code_for_embedding/{REPO_NAME}/{REPO_NAME}_repo_full.json"
 
     # Ensure output directory exists
     os.makedirs(output_dir, exist_ok=True)

@@ -213,18 +213,18 @@ def _print_module(module, indent=""):
 
 def main():
     repos = [
-    "/data3/pwh/swebench-repos/pylint",
-    "/data3/pwh/swebench-repos/pytest",
-    "/data3/pwh/swebench-repos/requests",
-    "/data3/pwh/swebench-repos/matplotlib", 
-    "/data3/pwh/swebench-repos/sphinx",
-    "/data3/pwh/swebench-repos/sqlfluff",
-    "/data3/pwh/swebench-repos/xarray",
-    "/data3/pwh/swebench-repos/scikit-learn",
-    # "/data3/pwh/swebench-repos/flask",
-    "/data3/pwh/swebench-repos/django",
-    "/data3/pwh/swebench-repos/sympy",
-    "/data3/pwh/swebench-repos/astropy",
+    "./swebench-repos/pylint",
+    "./swebench-repos/pytest",
+    "./swebench-repos/requests",
+    "./swebench-repos/matplotlib", 
+    "./swebench-repos/sphinx",
+    "./swebench-repos/sqlfluff",
+    "./swebench-repos/xarray",
+    "./swebench-repos/scikit-learn",
+    "./swebench-repos/flask",
+    "./swebench-repos/django",
+    "./swebench-repos/sympy",
+    "./swebench-repos/astropy",
     # Add more paths
     ]
 

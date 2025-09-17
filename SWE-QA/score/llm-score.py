@@ -217,9 +217,9 @@ if __name__ == "__main__":
     ]
     
     # Set paths
-    candidate_base_path = "/data2/raymone/answer/claude-sonnet-3-7/cursor"
-    reference_base_path = "/data2/raymone/answer/aggregated"
-    output_base_path = "/data2/raymone/answer/score/llm-as-a-judge/claude-sonnet-3-7/cursor"
+    candidate_base_path = "./answer/claude-sonnet-3-7/cursor"
+    reference_base_path = "./answer/aggregated"
+    output_base_path = "./answer/score/llm-as-a-judge/claude-sonnet-3-7/cursor"
     
     for repo in repos:
         candidate_path = f"{candidate_base_path}/{repo}.jsonl"

@@ -30,8 +30,8 @@ REPOS = [repo.strip() for repo in REPOS_STR.split(",")]
 # Path configuration
 BASE_INPUT_PATH = PROJECT_ROOT / "datasets" / "questions"
 BASE_OUTPUT_PATH = PROJECT_ROOT / "datasets" / "answers" / "sliding_window"
-# EMBEDDINGS_BASE_PATH = PROJECT_ROOT / "datasets" / "faiss" / "sliding_window"
-EMBEDDINGS_BASE_PATH = "/data2/raymone/voyage_faiss_sliding_window"
+EMBEDDINGS_BASE_PATH = PROJECT_ROOT / "datasets" / "faiss" / "sliding_window"
+
 # ====================================================
 
 def load_data_from_jsonl(path):
