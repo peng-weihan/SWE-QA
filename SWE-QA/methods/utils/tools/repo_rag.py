@@ -165,7 +165,7 @@ def repo_search_rag(query: str, repo_name: str) -> str:
         Raw search result string
     """
     try:
-        rag = FuncChunkRAG(save_path=f"/data2/raymone/voyage_faiss_func_chunk/{repo_name}_embeddings.json")
+        rag = FuncChunkRAG(save_path="")
         # rag = FuncChunkRAG(save_path=f"{PROJECT_ROOT}/datasets/faiss/func_chunk/{repo_name}_embeddings.json")
         results = rag.find_relevant_code(query, top_k=5)
         if not results:

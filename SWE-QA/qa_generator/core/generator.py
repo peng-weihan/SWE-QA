@@ -15,8 +15,8 @@ class BaseGenerator:
     
     def __init__(self, baseurl: str = None, apikey: str = None):
         self.llm_client = OpenAI(
-            base_url="https://aihubmix.com/v1",
-            api_key="sk-LWnmiSBkrZp9kuVw18BdFaAf201d41D69629Fb16Aa66623f"
+            base_url="",
+            api_key=""
         )
 
     def _call_llm(self, system_prompt: str, user_prompt: str) -> str:
@@ -36,7 +36,7 @@ class BaseGenerator:
         try:
             # Call LLM
             response = self.llm_client.chat.completions.create(
-                model="openai/gpt-oss-120b",
+                model="",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}

@@ -15,7 +15,6 @@ import argparse
 def main():
     REPO_NAME = "django" # streamlink, reflex, conan
     parser = argparse.ArgumentParser(description="Extract all code nodes from code repository")
-    # parser.add_argument("--repo_path","-r",default="/Users/xinyun/Programs/django/django/core", help="Path to code repository")
     parser.add_argument("--output-dir", "-o", default="./codeqa/dataset/generated_questions", help="Output directory")
     parser.add_argument("--batch-size", "-b", type=int, default=20, help="Number of questions to write per batch")
     

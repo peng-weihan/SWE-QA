@@ -925,14 +925,3 @@ class CodeAnalyzerSimple:
                     _ = future.result()
                 except Exception as e:
                     print(f"[ERROR] Task exception: {e}")
-
-        # for var in self.repository_structure.variables:
-        #     for func in self.repository_structure.functions:
-        #         if not func.relative_code or not func.relative_code.code:
-        #             continue
-                
-        #         # Find occurrences of variable name in function code
-        #         # Use regular expression to match whole words
-        #         pattern = r'\b' + re.escape(var.name) + r'\b'
-        #         if re.search(pattern, func.relative_code.code):
-        #             var.references.append(func.name)

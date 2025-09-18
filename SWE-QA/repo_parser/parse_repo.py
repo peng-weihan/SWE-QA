@@ -245,21 +245,5 @@ def main():
             print(f"Analysis failed: {repo_path}, error: {e}")
             continue
 
-    # # Set command line arguments
-    # parser = argparse.ArgumentParser(description="Analyze code repository structure")
-    # parser.add_argument("--repo_path","-r",default="/data3/pwh/sympy", help="Path to the code repository")
-    # parser.add_argument("--output_dir", "-o", default="repo_analysis", help="Output directory")
-    
-    # args = parser.parse_args()
-    
-    # # Analyze repository
-    # repository = analyze_repository(repo_path=args.repo_path, repo_root="/data3/pwh/sympy")
-    
-    # # Print summary
-    # print_repository_summary(repository)
-    
-    # # Save data
-    # save_repository_data(repository, args.output_dir)
-
 if __name__ == "__main__":
     main() 
