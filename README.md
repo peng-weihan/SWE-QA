@@ -1,12 +1,11 @@
 # SWE-QA
 
 **SWE-QA: Can Language Models Answer Repository-level Code Questions?**
-
-This repository contains code and data for the SWE-QA benchmark, which evaluates language models' ability to answer repository-level code questions.
+This repository contains code and data for the SWE-QA benchmark, which evaluates language models' ability to answer repository-level code questions across 12 popular Python projects including Django, Flask, Requests, and more.
 
 ## 📝 Prompts
 
-The detailed prompt templates used in the paper are in the `appendix/` directory.
+The detailed prompt templates used in the paper are in the `supplementary.pdf` file
 
 ## 📊 Dataset
 
@@ -22,26 +21,12 @@ For more details about the methodology and results, please refer to the paper:
 
 ```
 SWE-QA/
-├── appendix/                  # Supplementary materials
-│   ├── prompt.pdf            # Prompt   
-│   ├── prompt1.md            # Issue extraction prompt template
-│   ├── prompt2.md            # Question generation prompt template
-│   └── prompt3.md            # Answer evaluation prompt template
 ├── SWE-QA/                    # Main package directory
 │   ├── datasets/              # Dataset files and repositories
 │   │   ├── questions/         # Question datasets (JSONL format)
 │   │   │   ├── astropy.jsonl  # Project-specific datasets
 │   │   │   ├── django.jsonl
-│   │   │   ├── flask.jsonl
-│   │   │   ├── matplotlib.jsonl
-│   │   │   ├── pylint.jsonl
-│   │   │   ├── pytest.jsonl
-│   │   │   ├── requests.jsonl
-│   │   │   ├── scikit-learn.jsonl
-│   │   │   ├── sphinx.jsonl
-│   │   │   ├── sqlfluff.jsonl
-│   │   │   ├── sympy.jsonl
-│   │   │   └── xarray.jsonl
+│   │   │   ...
 │   │   ├── answers/           # Answer datasets
 │   │   ├── faiss/             # FAISS index files
 │   │   └── repos/             # Repository data
@@ -76,12 +61,11 @@ SWE-QA/
 │   ├── models/                # Data models
 │   │   └── data_models.py
 │   └── utils/                 # Utility functions
-├── docs/                      # Documentation
+├── docs/                      # Documentation of each part
 │   └── README.md
 ├── LICENSE                    # License file
+├── supplementary.pdf          # Supplementary file (prompts)
 └── README.md                  # This file
-
-## 📝 Citation
 
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
