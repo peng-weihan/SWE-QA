@@ -21,34 +21,35 @@ For more details about the methodology and results, please refer to the paper:
 
 ```
 SWE-QA/
-├── SWE-QA/                    # Main package directory
-│   ├── datasets/              # Dataset files and repositories
-│   │   ├── questions/         # Question datasets (JSONL format)
-│   │   │   ├── astropy.jsonl  # Project-specific datasets
+├── SWE-QA/                     # Main package directory
+│   ├── datasets/               # Dataset files and repositories
+│   │   ├── questions/          # Question datasets (JSONL format)
+│   │   │   ├── astropy.jsonl   # Project-specific datasets
 │   │   │   ├── django.jsonl
 │   │   │   ...
-│   │   ├── answers/           # Answer datasets
-│   │   ├── faiss/             # FAISS index files
-│   │   └── repos/             # Repository data
-│   ├── issue_analyzer/        # GitHub issue analysis
+│   │   ├── answers/            # Answer datasets
+│   │   ├── faiss/              # FAISS index files
+│   │   └── repos/              # Repository data
+│   ├── issue_analyzer/         # GitHub issue analysis
 │   │   ├── get_question_from_issue.py
 │   │   └── pull_issues.py
-│   ├── methods/               # Evaluation methods
-│   │   ├── llm_direct/        # Direct LLM evaluation
+│   ├── methods/                # Evaluation methods
+│   │   ├── llm_direct/         # Direct LLM evaluation
 │   │   ├── rag_function_chunk/ # RAG with function chunking
 │   │   ├── rag_sliding_window/ # RAG with sliding window
+│   │   ├── swe_qa_agent/       # SWE-QA-Agent based on ReAct framework
 │   │   ├── code_formatting.py
 │   │   └── data_models.py
-│   ├── score/                 # Scoring utilities
-│   │   └── llm-score.py       # LLM-as-a-judge evaluation
-│   ├── models/                # Data models
+│   ├── score/                  # Scoring utilities
+│   │   └── llm-score.py        # LLM-as-a-judge evaluation
+│   ├── models/                 # Data models
 │   │   └── data_models.py
-│   └── utils/                 # Utility functions
-├── docs/                      # Documentation of each part
+│   └── utils/                  # Utility functions
+├── docs/                       # Documentation of each part
 │   └── README.md
-├── LICENSE                    # License file
-├── supplementary.pdf          # Supplementary file (prompts)
-└── README.md                  # This file
+├── LICENSE                     # License file
+├── supplementary.pdf           # Supplementary file (prompts)
+└── README.md                   # This file
 ```
 
 
