@@ -37,7 +37,6 @@ SWE-QA/
 │   │   ├── llm_direct/         # Direct LLM evaluation
 │   │   ├── rag_function_chunk/ # RAG with function chunking
 │   │   ├── rag_sliding_window/ # RAG with sliding window
-│   │   ├── swe_qa_agent/       # SWE-QA-Agent based on ReAct framework
 │   │   ├── code_formatting.py
 │   │   └── data_models.py
 │   ├── score/                  # Scoring utilities
