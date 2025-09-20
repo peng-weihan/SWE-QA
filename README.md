@@ -81,7 +81,7 @@ SWE-QA/
    ```bash
    # Use the provided script to clone all repositories at specific commits
    ./clone_repos.sh
-   
+   ```
 
 ## ⚡ Quick Start
 
