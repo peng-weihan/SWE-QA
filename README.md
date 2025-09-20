@@ -37,6 +37,7 @@ SWE-QA/
 │   │   ├── llm_direct/         # Direct LLM evaluation
 │   │   ├── rag_function_chunk/ # RAG with function chunking
 │   │   ├── rag_sliding_window/ # RAG with sliding window
+│   │   ├── swe_qa_agent/       # SWE-QA-Agent with LangGraph workflow ([README](SWE-QA/methods/swe_qa_agent/README.md))
 │   │   ├── code_formatting.py
 │   │   └── data_models.py
 │   ├── score/                  # Scoring utilities
@@ -151,14 +152,20 @@ This method will:
 - Retrieve relevant chunks for each question
 - Generate contextual answers
 
-### 4. Evaluation and Scoring
+### 4. SWE-QA Agent
+
+Use the intelligent agent-based approach with LangGraph workflow:
+
+For detailed setup and usage instructions, see the [SWE-QA Agent README](SWE-QA/methods/swe_qa_agent/README.md).
+
+### 5. Evaluation and Scorings
 Before executing, you need to configure the environment variables by filling the `.env` file in the `SWE-QA-Bench/score` directory:
 ```bash
 OPENAI_BASE_URL=your_openai_base_url
 OPENAI_API_KEY=your_api_key
 MODEL=your_model_name
 
-METHOD= # choose from [direct, func_chunk, sliding_window]
+METHOD= # choose from [direct, func_chunk, sliding_window, swe_qa_agent]
 ```
 
 Evaluate generated answers using LLM-as-a-judge:
