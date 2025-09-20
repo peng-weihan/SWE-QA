@@ -25,11 +25,14 @@ SWE-QA/
 │   ├── datasets/               # Dataset files and repositories
 │   │   ├── questions/          # Question datasets (JSONL format)
 │   │   │   ├── astropy.jsonl   # Project-specific datasets
-│   │   │   ├── django.jsonl
-│   │   │   ...
+│   │   │   ├── ...
 │   │   ├── answers/            # Answer datasets
+│   │   ├── reference/          # Reference datasets
 │   │   ├── faiss/              # FAISS index files
-│   │   └── repos/              # Repository data
+│   │   ├── issue_questions/    # Questions from GitHub issues
+│   │   ├── issues/             # GitHub issues data
+│   │   ├── repos/              # Repository data
+│   │   └── scores/             # Evaluation scores
 │   ├── issue_analyzer/         # GitHub issue analysis
 │   │   ├── get_question_from_issue.py
 │   │   └── pull_issues.py
@@ -37,21 +40,27 @@ SWE-QA/
 │   │   ├── llm_direct/         # Direct LLM evaluation
 │   │   ├── rag_function_chunk/ # RAG with function chunking
 │   │   ├── rag_sliding_window/ # RAG with sliding window
-│   │   ├── swe_qa_agent/       # SWE-QA-Agent with LangGraph workflow ([README](SWE-QA/methods/swe_qa_agent/README.md))
-│   │   ├── code_formatting.py
-│   │   └── data_models.py
+│   │   ├── swe_qa_agent/       # SWE-QA-Agent with LangGraph workflow
+│   │   │   ├── src/            # Source code modules
+│   │   │   ├── prompts/        # Prompt templates for agent
+│   │   │   ├── config.py       # Configuration settings
+│   │   │   ├── main.py         # Main entry point for agent
+│   │   │   ├── README.md       # Agent-specific documentation
+│   │   │   ├── pyproject.toml  # Python project configuration
+│   │   │   ├── requirements.txt # Python dependencies
+│   │   │   └── uv.lock         # Dependency lock file
+│   │   └── code_formatting.py
+│   ├── qa_generator/           # Question generation
+│   ├── repo_parser/            # Repository parsing
 │   ├── score/                  # Scoring utilities
-│   │   └── llm-score.py        # LLM-as-a-judge evaluation
-│   ├── models/                 # Data models
-│   │   └── data_models.py
-│   └── utils/                  # Utility functions
+│   └── models/                 # Data models
 ├── docs/                       # Documentation of each part
-│   └── README.md
+├── clone_repos.sh              # Script to clone repositories at specific commits
+├── repos.txt                   # List of repository URLs and commit hashes
 ├── LICENSE                     # License file
 ├── supplementary.pdf           # Supplementary file (prompts)
 └── README.md                   # This file
 ```
-
 
 ## 🚀 Environment Setup
 
@@ -67,14 +76,12 @@ SWE-QA/
    ```bash
    pip install -r requirements.txt
    ```
+   
 **SWE Repository Prerequisites:**
    ```bash
-   cd SWE-QA-Bench/datasets/repos
-   # Note: You can also clone only the repositories you want to experiment with
-   git clone https://github.com/astropy/astropy
-   git clone https://github.com/django/django
-   ...
-   ```
+   # Use the provided script to clone all repositories at specific commits
+   ./clone_repos.sh
+   
 
 ## ⚡ Quick Start
 
