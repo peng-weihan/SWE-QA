@@ -57,6 +57,7 @@ SWE-QA/
 ├── docs/                       # Documentation of each part
 ├── clone_repos.sh              # Script to clone repositories at specific commits
 ├── repos.txt                   # List of repository URLs and commit hashes
+├── requirements.txt           # Python dependencies required to run the project
 ├── LICENSE                     # License file
 ├── supplementary.pdf           # Supplementary file (prompts)
 └── README.md                   # This file
