@@ -22,17 +22,15 @@ For more details about the methodology and results, please refer to the paper:
 ```
 SWE-QA/
 ├── SWE-QA/                     # Main package directory
-│   ├── datasets/               # Dataset files and repositories
-│   │   ├── questions/          # Question datasets (JSONL format)
-│   │   │   ├── astropy.jsonl   # Project-specific datasets
-│   │   │   ├── ...
-│   │   ├── answers/            # Answer datasets
-│   │   ├── reference/          # Reference datasets
-│   │   ├── faiss/              # FAISS index files
-│   │   ├── issue_questions/    # Questions from GitHub issues
-│   │   ├── issues/             # GitHub issues data
-│   │   ├── repos/              # Repository data
-│   │   └── scores/             # Evaluation scores
+│   ├── datasets/              # Dataset files and repositories
+│   │   ├── questions/         # Question datasets (JSONL format)
+│   │   │   ├── astropy.jsonl  # Project-specific datasets
+│   │   │   ├── django.jsonl
+│   │   │   ...
+│   │   ├── reference/         # Reference Answer(Benchmark)
+│   │   ├── seeds/             # Seed questions in 12 taxonomies
+│   │   ├── faiss/             # FAISS index files
+│   │   └── repos/             # Repository data
 │   ├── issue_analyzer/         # GitHub issue analysis
 │   │   ├── get_question_from_issue.py
 │   │   └── pull_issues.py
