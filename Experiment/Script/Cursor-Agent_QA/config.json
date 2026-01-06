@@ -1,0 +1,12 @@
+{
+  "repo_base_dir": "/home/ugproj/raymone/swe-repos",
+  "question_dir": "/home/ugproj/raymone/GIT_workspace/ICLR/DeepRepoQA/Script/Cursor-Agent_QA/origin_question",
+  "output_dir": "/home/ugproj/raymone/GIT_workspace/ICLR/DeepRepoQA/Script/Cursor-Agent_QA/unidentified_question",
+  "model": "auto",
+  "max_concurrency": 12,
+  "output_format": "json",
+  "max_tool_calls": 30,
+  "force": false,
+  "repo_list": ["flask","pylint","sphinx","sqlfluff","sympy"]
+}
+

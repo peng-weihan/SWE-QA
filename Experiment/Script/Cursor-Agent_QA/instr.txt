@@ -1,0 +1,9 @@
+python excluded/batch_script.py \                                               
+  --repo-base-dir /home/ugproj/raymone/swe-repos/astropy \
+  --question-dir /home/ugproj/raymone/swe-repos/astropy/excluded \
+  --output-dir /home/ugproj/raymone/swe-repos/astropy/excluded/results \
+  --repo-filter astropy \
+  --model auto \
+  --max-concurrency 12 \
+  --output-format json \
+  --max-tool-calls 30
