@@ -1,16 +1,25 @@
-# SWE-QA: Software Engineering Q&A Benchmark
+# SWE-QA
+
+**SWE-QA: Repository-Level Code Question-Answering Benchmark**
 
 A comprehensive benchmark and evaluation framework for Software Engineering question-answering systems. This repository contains benchmark datasets, evaluation tools, and experimental scripts for assessing the performance of various QA approaches on real-world software engineering questions.
+
+**📦 Complete Dataset**: The full benchmark dataset (576 questions across 12 repositories) is available on [Hugging Face](https://huggingface.co/datasets/swe-qa/SWE-QA-Benchmark). You can download it using:
+
+```python
+from datasets import load_dataset
+dataset = load_dataset("swe-qa/SWE-QA-Benchmark")
+```
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Project Structure](#project-structure)
 - [Benchmark Datasets](#benchmark-datasets)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Repository Structure](#repository-structure)
+- [Environment Setup](#environment-setup)
+- [Quick Start](#quick-start)
 - [Evaluation](#evaluation)
-- [Contributing](#contributing)
+- [Citation](#citation)
 - [License](#license)
 
 ## 🎯 Overview
@@ -23,34 +32,11 @@ The benchmark includes:
 - **Reference answers** for each question
 - **Evaluation tools** using LLM-as-a-Judge methodology
 
-## 📁 Project Structure
+### Benchmark Construction Workflow
 
-```
-SWE-QA/
-├── Benchmark/                    # Benchmark dataset files (JSONL format)
-│   ├── astropy.jsonl
-│   ├── django.jsonl
-│   ├── flask.jsonl
-│   └── ...
-├── Benchmark construction/       # Tools for building benchmarks
-│   ├── repo_parser/             # Repository parsing utilities
-│   ├── qa_generator/            # Question-answer generation
-│   ├── issue_analyzer/          # Extract questions from GitHub issues
-│   └── score/                   # Scoring scripts
-├── Experiment/                   # Experimental QA approaches
-│   └── Script/
-│       ├── SWE-agent_QA/        # SWE-agent based QA
-│       ├── OpenHands_QA/        # OpenHands agent QA
-│       ├── Cursor-Agent_QA/     # Cursor agent QA
-│       ├── rag_sliding_window/  # RAG with sliding windows
-│       ├── rag_function_chunk/  # RAG with function chunks
-│       └── llm_direct/          # Direct LLM approach
-├── Seed_question/                # Question templates by category
-├── llm-as-a-judge.py            # LLM-based evaluation tool
-├── clone_repos.sh                # Script to clone repositories
-├── repo_with_version.txt         # Repository URLs and commit hashes
-└── requirements.txt              # Python dependencies
-```
+The following diagram illustrates the workflow for constructing the SWE-QA benchmark:
+
+![Benchmark Construction Workflow](assets/workflow.png)
 
 ## 📊 Benchmark Datasets
 
@@ -78,57 +64,191 @@ Each dataset file (`.jsonl`) contains questions and reference answers in JSON Li
 {"question": "How to...", "answer": "Reference answer..."}
 ```
 
-## 🔧 Installation
+**Note**: For the complete benchmark dataset with all questions and reference answers, please download from [Hugging Face](https://huggingface.co/datasets/swe-qa/SWE-QA-Benchmark). The dataset includes 576 questions across 12 repositories, with each repository containing 48 questions.
 
-1. **Clone the repository:**
+### Benchmark Example
+
+The following example shows the structure and format of questions in the benchmark:
+
+![Benchmark Example](assets/example.png)
+
+## 📁 Repository Structure
+
+```
+SWE-QA/
+├── Benchmark/                    # Benchmark dataset files (JSONL format)
+│   ├── astropy.jsonl
+│   ├── django.jsonl
+│   ├── flask.jsonl
+│   └── ...
+├── Benchmark construction/       # Tools for building benchmarks
+│   ├── repo_parser/             # Repository parsing utilities
+│   ├── qa_generator/            # Question-answer generation
+│   ├── issue_analyzer/          # Extract questions from GitHub issues
+│   └── score/                   # Scoring scripts
+├── Experiment/                   # Experimental QA approaches
+│   └── Script/
+│       ├── SWE-agent_QA/        # SWE-agent based QA
+│       ├── OpenHands_QA/        # OpenHands agent QA
+│       ├── Cursor-Agent_QA/     # Cursor agent QA
+│       ├── rag_sliding_window/  # RAG with sliding windows
+│       ├── rag_function_chunk/  # RAG with function chunks
+│       └── llm_direct/          # Direct LLM approach
+├── Seed_question/                # Question templates by category
+├── assets/                       # Images and resources
+│   ├── workflow.png            # Benchmark construction workflow
+│   └── example.png             # Benchmark example
+├── llm-as-a-judge.py            # LLM-based evaluation tool
+├── clone_repos.sh                # Script to clone repositories
+├── repo_with_version.txt         # Repository URLs and commit hashes
+├── requirements.txt              # Python dependencies
+└── README.md                     # This file
+```
+
+## 🚀 Environment Setup
+
+### Prerequisites
+
+- Python 3.11+
+- pip or conda for package management
+- OpenAI API access (required for evaluation and some methods)
+- Voyage AI API access (required for RAG-based methods)
+- Cursor API access (required for Cursor-Agent_QA method)
+
+### Installation
+
+**1. Clone the repository:**
 ```bash
 git clone <repository-url>
 cd SWE-QA
 ```
 
-2. **Install dependencies:**
+**2. Install dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Clone benchmark repositories (optional):**
+**3. Clone benchmark repositories:**
 ```bash
+# Edit clone_repos.sh to set TARGET_DIR
 bash clone_repos.sh
 ```
 
-4. **Set up environment variables for evaluation:**
-Create a `.env` file or export the following variables:
+**4. Set up environment variables:**
+
+Create a `.env` file in the root directory or export the following variables:
+
 ```bash
-export EVAL_LLM_BASE_URL="your-azure-openai-endpoint"
+# For evaluation (llm-as-a-judge.py)
+export EVAL_LLM_BASE_URL="your-openai-endpoint"
 export EVAL_LLM_API_VERSION="your-api-version"
 export EVAL_LLM_API_KEY="your-api-key"
 export EVAL_LLM_MODEL_NAME="your-model-name"
+
+# For Cursor-Agent_QA
+export CURSOR_API_KEY="your-cursor-api-key"
+export CURSOR_AGENT_PATH="/path/to/cursor-agent"  # Optional
 ```
 
-## 🚀 Usage
+## ⚡ Quick Start
 
-### Running Experiments
+### 1. Direct LLM Evaluation
 
-Each experimental approach has its own script in the `Experiment/Script/` directory. Refer to the specific README or documentation in each subdirectory.
-
-### Generating Questions and Answers
-
-Use the benchmark construction tools to generate new questions and answers:
+Before executing, configure the environment variables by creating a `.env` file in the `Experiment/Script/llm_direct` directory:
 
 ```bash
-cd "Benchmark construction"
-# Follow the instructions in the respective modules
+OPENAI_BASE_URL=your_openai_base_url
+OPENAI_API_KEY=your_api_key
+MODEL=your_model_name
 ```
 
-### Cloning Specific Repository Versions
-
-To clone repositories at the exact versions used in the benchmark:
+Evaluate language models directly on repository-level questions:
 
 ```bash
-bash clone_repos.sh
+cd Experiment/Script/llm_direct
+python main.py
 ```
 
-Make sure to set the `TARGET_DIR` variable in the script to specify where repositories should be cloned.
+This method will:
+- Load questions from the benchmark dataset
+- Send questions directly to the LLM
+- Generate answers without additional context
+- Save results to output directory
+
+### 2. RAG with Function Chunking
+
+Before executing, configure the environment variables by creating a `.env` file in the `Experiment/Script/rag_function_chunk` directory:
+
+```bash
+# Voyage AI Configuration
+VOYAGE_API_KEY=your_voyage_api_key
+VOYAGE_MODEL=voyage-code-3  # recommended
+
+# OpenAI Configuration
+OPENAI_BASE_URL=your_openai_base_url
+OPENAI_API_KEY=your_api_key
+MODEL=your_model_name
+```
+
+Use RAG with function-level code chunking:
+
+```bash
+cd Experiment/Script/rag_function_chunk
+python main.py
+```
+
+This method will:
+- Parse code into function-level chunks
+- Build vector embeddings for code chunks
+- Retrieve relevant code context for each question
+- Generate answers using retrieved context
+
+### 3. RAG with Sliding Window
+
+Before executing, configure the environment variables by creating a `.env` file in the `Experiment/Script/rag_sliding_window` directory:
+
+```bash
+# Voyage AI Configuration
+VOYAGE_API_KEY=your_voyage_api_key
+VOYAGE_MODEL=voyage-code-3  # recommended
+
+# OpenAI Configuration
+OPENAI_URL=your_openai_url
+OPENAI_KEY=your_openai_key
+MODEL=your_model_name
+```
+
+Use RAG with sliding window text chunking:
+
+```bash
+cd Experiment/Script/rag_sliding_window
+python main.py
+```
+
+This method will:
+- Split code into overlapping text windows
+- Create embeddings for text chunks
+- Retrieve relevant chunks for each question
+- Generate contextual answers
+
+### 4. SWE-agent QA
+
+For detailed setup and usage instructions, see the [SWE-agent QA README](Experiment/Script/SWE-agent_QA/README.md).
+
+### 5. OpenHands QA
+
+For detailed setup and usage instructions, see the [OpenHands QA README](Experiment/Script/OpenHands_QA/README.md).
+
+### 6. Cursor-Agent QA
+
+Before executing, set the required environment variables:
+
+```bash
+export CURSOR_API_KEY="your-cursor-api-key"
+export CURSOR_AGENT_PATH="/path/to/cursor-agent"  # Optional
+```
+
+For detailed setup and usage instructions, see the [Cursor-Agent QA README](Experiment/Script/Cursor-Agent_QA/README.md).
 
 ## 📝 Evaluation
 
@@ -197,14 +317,6 @@ The `Seed_question/` directory contains question templates organized by category
 - `purpose.txt` - Purpose and usage questions
 - And more...
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-See [LICENSE](LICENSE) file for details.
-
 ## 📚 Citation
 
 If you use this benchmark in your research, please cite:
@@ -224,7 +336,14 @@ If you use this benchmark in your research, please cite:
 - Each repository is pinned to a specific commit for reproducibility
 - Reference answers are provided for all questions in the benchmark
 
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## 📧 Contact
 
 For questions or issues, please open an issue on GitHub.
-

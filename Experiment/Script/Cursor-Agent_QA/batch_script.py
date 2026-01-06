@@ -32,7 +32,9 @@ def run_cmd(cmd: str, output_format: str = "text") -> tuple[str, float, dict]:
     start_time = time.time()
     
     # Debug: Print command (without API key)
-    debug_cmd = cmd.replace("key_ea13d8e275b405b02f14e7995393489e6989e8e4f327559f5ca364aa45751f52", "***") if "key_" in cmd else cmd
+    # Mask API keys in debug output
+    import re
+    debug_cmd = re.sub(r'key_[a-f0-9]+', '***', cmd) if "key_" in cmd else cmd
     rich.print(f"[cyan](Thread {thread_id}) DEBUG: Executing command: {debug_cmd[:300]}...[/cyan]", flush=True)
     
     # Ensure PATH includes common locations for cursor-agent
@@ -383,7 +385,10 @@ def load_processed_questions(output_file: str) -> set[str]:
 
 def generate_trajactory(questions: List[str], repo_path: str, model: str = "auto", max_concurrency: int = os.cpu_count(), output_file: str = None, output_format: str = "json", cursor_agent_path: str = None, max_tool_calls: int = 30, use_force: bool = False) -> List[TestResult]:
     results = []
-    cursor_api_key = "key_ea13d8e275b405b02f14e7995393489e6989e8e4f327559f5ca364aa45751f52"  # Hardcoded API key
+    # Get API key from environment variable or config, with fallback to empty string
+    cursor_api_key = os.getenv("CURSOR_API_KEY", "")
+    if not cursor_api_key:
+        raise ValueError("CURSOR_API_KEY environment variable is required. Please set it before running the script.")
     total_latency = 0.0
     total_input_tokens = 0
     total_output_tokens = 0
@@ -394,24 +399,42 @@ def generate_trajactory(questions: List[str], repo_path: str, model: str = "auto
         rich.print(f"[red]Error: Output path {output_file} is a directory, not a file. Cannot write results.[/red]")
         return results
     
-    # Determine cursor-agent path: prioritize configured full path, otherwise use hardcoded path
-    # Use specific version path to avoid broken symlink issues
-    CURSOR_AGENT_DEFAULT_PATH = "/home/ugproj/.local/share/cursor-agent/versions/2025.12.17-996666f/cursor-agent"  # Hardcoded cursor-agent path (specific version)
+    # Determine cursor-agent path: prioritize configured full path, then environment variable, then common paths
+    # Check environment variable first
+    env_cursor_agent_path = os.getenv("CURSOR_AGENT_PATH")
     
     if cursor_agent_path and os.path.exists(cursor_agent_path):
         cursor_agent_cmd = cursor_agent_path
-    elif os.path.exists(CURSOR_AGENT_DEFAULT_PATH):
-        cursor_agent_cmd = CURSOR_AGENT_DEFAULT_PATH
-        rich.print(f"[green]Using cursor-agent at: {cursor_agent_cmd}[/green]", flush=True)
+    elif env_cursor_agent_path and os.path.exists(env_cursor_agent_path):
+        cursor_agent_cmd = env_cursor_agent_path
+        rich.print(f"[green]Using cursor-agent from CURSOR_AGENT_PATH: {cursor_agent_cmd}[/green]", flush=True)
     else:
-        # Fallback to symlink path
-        fallback_path = "/home/ugproj/.local/bin/cursor-agent"
-        if os.path.exists(fallback_path):
-            cursor_agent_cmd = fallback_path
-            rich.print(f"[yellow]Using fallback cursor-agent at: {cursor_agent_cmd}[/yellow]", flush=True)
+        # Try common installation paths
+        common_paths = [
+            os.path.expanduser("~/.local/bin/cursor-agent"),
+            os.path.expanduser("~/.local/share/cursor-agent/versions/*/cursor-agent"),
+        ]
+        
+        cursor_agent_cmd = None
+        for path_pattern in common_paths:
+            if '*' in path_pattern:
+                # Handle glob patterns
+                import glob
+                matches = glob.glob(path_pattern)
+                if matches:
+                    # Use the most recent version
+                    cursor_agent_cmd = sorted(matches)[-1]
+                    break
+            elif os.path.exists(path_pattern):
+                cursor_agent_cmd = path_pattern
+                break
+        
+        if cursor_agent_cmd:
+            rich.print(f"[green]Using cursor-agent at: {cursor_agent_cmd}[/green]", flush=True)
         else:
+            # Final fallback: assume cursor-agent is in PATH
             cursor_agent_cmd = "cursor-agent"
-            rich.print(f"[yellow]Warning: cursor-agent not found at {CURSOR_AGENT_DEFAULT_PATH}, using 'cursor-agent'[/yellow]", flush=True)
+            rich.print(f"[yellow]Warning: cursor-agent not found in common paths, using 'cursor-agent' from PATH[/yellow]", flush=True)
     
     # Create list of (command, question) pairs
     cmd_question_pairs = []

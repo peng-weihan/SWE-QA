@@ -89,7 +89,7 @@ class FuncChunkRAG():
                 data = json.load(f)
             return data
               
-        # 初始化FAISS索引和元数据
+        # Initialize FAISS index and metadata
         self.faiss_index = None
         self.code_metadata = []
         

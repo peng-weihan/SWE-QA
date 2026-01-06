@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
-# 获取项目根目录（SWE-QA/SWE-QA）
+# Get project root directory
 
 
 
@@ -23,7 +23,7 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 QUESTIONS_DIR = PROJECT_ROOT / "datasets" / "questions"
 ANSWERS_DIR = PROJECT_ROOT / "datasets" / "answers" / MODEL /"direct"
 
-# 确保目录存在
+# Ensure directories exist
 QUESTIONS_DIR.mkdir(parents=True, exist_ok=True)
 ANSWERS_DIR.mkdir(parents=True, exist_ok=True)
 # Validate required environment variables
@@ -113,10 +113,10 @@ def process_repo_parallel(repo, max_workers=QUESTION_MAX_WORKERS):
     
     print(f"Processing {repo}: Found {len(questions_data)} questions")
     
-    # 确保输出目录存在
+    # Ensure output directory exists
     output_file.parent.mkdir(parents=True, exist_ok=True)
     
-    # 实时写入：每处理完一个问题就立即保存
+    # Real-time write: save immediately after processing each question
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         # Submit all tasks
         future_to_question = {
@@ -130,7 +130,7 @@ def process_repo_parallel(repo, max_workers=QUESTION_MAX_WORKERS):
                 question_idx = future_to_question[future]
                 try:
                     result = future.result()
-                    # 实时写入：每处理完一个问题就立即保存
+                    # Real-time write: save immediately after processing each question
                     save_single_answer_to_file(result, output_file)
                 except Exception as e:
                     print(f"Error processing question {question_idx + 1}: {e}")

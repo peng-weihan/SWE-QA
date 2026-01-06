@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-批量重命名 JSONL 文件中的字段：
-1. 原来的 question 字段改名为 origin_question
-2. rewritten_question 字段改名为 question 并放到第一个字段位置
+Batch rename fields in JSONL files:
+1. Rename the original 'question' field to 'origin_question'
+2. Rename 'rewritten_question' field to 'question' and place it as the first field
 """
 
 import json
@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 
 def process_jsonl_file(file_path):
-    """处理单个 JSONL 文件"""
+    """Process a single JSONL file"""
     output_lines = []
     modified = False
     
@@ -24,34 +24,34 @@ def process_jsonl_file(file_path):
                 data = json.loads(line)
                 file_modified = False
                 
-                # 处理逻辑：
-                # 1. 如果存在 question 字段，且不存在 origin_question，将其改名为 origin_question
-                # 2. 如果存在 rewritten_question 字段，将其改名为 question 并放到第一个位置
-                # 3. 如果不存在 rewritten_question，但 question 已经是重写后的问题（且存在 origin_question），保持不变
+                # Processing logic:
+                # 1. If 'question' field exists and 'origin_question' does not, rename 'question' to 'origin_question'
+                # 2. If 'rewritten_question' field exists, rename it to 'question' and place it as the first field
+                # 3. If 'rewritten_question' does not exist but 'question' is already rewritten (and 'origin_question' exists), keep unchanged
                 
-                # 步骤1: 处理原始 question -> origin_question
+                # Step 1: Process original question -> origin_question
                 if 'question' in data and 'origin_question' not in data:
-                    # 将 question 改名为 origin_question
+                    # Rename question to origin_question
                     data['origin_question'] = data.pop('question')
                     file_modified = True
                 
-                # 步骤2: 处理 rewritten_question -> question（放到第一个位置）
+                # Step 2: Process rewritten_question -> question (place as first field)
                 if 'rewritten_question' in data:
                     rewritten_value = data.pop('rewritten_question')
-                    # 创建新字典，question 放在第一个位置
+                    # Create new dict with question as first field
                     new_data = {'question': rewritten_value}
-                    # 添加其他字段
+                    # Add other fields
                     for key, value in data.items():
                         new_data[key] = value
                     data = new_data
                     file_modified = True
                 elif 'question' not in data and 'origin_question' in data:
-                    # 如果只有 origin_question 没有 question，说明 question 已经被改名为 origin_question
-                    # 这种情况下，如果没有 rewritten_question，可能需要从其他地方获取
-                    # 但根据当前文件结构，这种情况应该不会发生
+                    # If only origin_question exists without question, it means question has been renamed to origin_question
+                    # In this case, if rewritten_question doesn't exist, we might need to get it from elsewhere
+                    # But based on current file structure, this case should not occur
                     pass
                 
-                # 确保 question 字段在第一个位置（如果存在）
+                # Ensure question field is in the first position (if it exists)
                 if 'question' in data:
                     question_value = data.pop('question')
                     new_data = {'question': question_value}
@@ -66,9 +66,9 @@ def process_jsonl_file(file_path):
                 
             except json.JSONDecodeError as e:
                 print(f"Warning: Failed to parse line in {file_path}: {e}")
-                output_lines.append(line)  # 保留原始行
+                output_lines.append(line)  # Keep original line
     
-    # 如果文件被修改，写回文件
+    # If file was modified, write back to file
     if modified:
         with open(file_path, 'w', encoding='utf-8') as f:
             for line in output_lines:
@@ -78,7 +78,12 @@ def process_jsonl_file(file_path):
     return False
 
 def main():
-    base_dir = Path("/home/ugproj/raymone/GIT_workspace/ICLR/DeepRepoQA/Script/Cursor-Agent_QA/unidentified_question")
+    import argparse
+    parser = argparse.ArgumentParser(description="Batch rename fields in JSONL files")
+    parser.add_argument("--input-dir", type=str, default="./output", help="Directory containing JSONL files to process")
+    args = parser.parse_args()
+    
+    base_dir = Path(args.input_dir)
     
     if not base_dir.exists():
         print(f"Error: Directory {base_dir} does not exist")
