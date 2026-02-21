@@ -80,6 +80,7 @@ SWE-QA/
 │   ├── astropy.jsonl
 │   ├── django.jsonl
 │   ├── flask.jsonl
+│   ├── java/                     # Java sample data
 │   └── ...
 ├── Benchmark construction/       # Tools for building benchmarks
 │   ├── repo_parser/             # Repository parsing utilities
@@ -87,13 +88,14 @@ SWE-QA/
 │   ├── issue_analyzer/          # Extract questions from GitHub issues
 │   └── score/                   # Scoring scripts
 ├── Experiment/                   # Experimental QA approaches
-│   └── Script/
-│       ├── SWE-agent_QA/        # SWE-agent based QA
-│       ├── OpenHands_QA/        # OpenHands agent QA
-│       ├── Cursor-Agent_QA/     # Cursor agent QA
-│       ├── rag_sliding_window/  # RAG with sliding windows
-│       ├── rag_function_chunk/  # RAG with function chunks
-│       └── llm_direct/          # Direct LLM approach
+│   ├── Script/
+│   │   ├── SWE-agent_QA/        # SWE-agent based QA
+│   │   ├── OpenHands_QA/        # OpenHands agent QA
+│   │   ├── Cursor-Agent_QA/     # Cursor agent QA
+│   │   ├── rag_sliding_window/  # RAG with sliding windows
+│   │   ├── rag_function_chunk/  # RAG with function chunks
+│   │   └── llm_direct/          # Direct LLM approach
+│   └── ErrorAnalysis/            # Error analysis
 ├── Seed_question/                # Question templates by category
 ├── assets/                       # Images and resources
 │   ├── workflow.png            # Benchmark construction workflow
